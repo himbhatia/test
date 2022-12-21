@@ -12,21 +12,35 @@ et = EdgeAuth(**{'key': ET_ENCRYPTION_KEY,
 print("chk pt. a1")
 
 
+
+
 #token = et.generate_url_token("/akamai/edgeauth")
 token = et.generate_url_token("/*")
+
+print("token = {}".format(token))
+
 print("chk pt. a2")
 
 
-#url = "http://{0}{1}".format(ET_HOSTNAME, "/akamai/edgeauth")
-url = "http://{0}{1}".format(ET_HOSTNAME, "/hls/stream.m3u8")
+# #url = "http://{0}{1}".format(ET_HOSTNAME, "/akamai/edgeauth")
+# url = "http://{0}{1}".format(ET_HOSTNAME, "/")
+# print("url = {}".format(url))
+
+# #print("et = {}".format(et))
+# print("chk pt. a3")
+
+
+# response = requests.get(url, cookies={et.token_name: token})
+# print("chk pt. a4")
+
+
+url = "http://{0}{1}?{2}={3}".format(ET_HOSTNAME, "/hls/stream.m3u8", et.token_name, token)
 print("url = {}".format(url))
 
-print("et = {}".format(et))
-print("chk pt. a3")
+response = requests.get(url)
 
+print(response)
 
-response = requests.get(url, cookies={et.token_name: token})
-print("chk pt. a4")
 
 print(response) # Maybe not 403
 
